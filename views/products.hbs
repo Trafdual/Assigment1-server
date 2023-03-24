@@ -9,8 +9,8 @@
 <body>
   <div class="jumbotron text-center">
   <h1>Products</h1>       
-  <form method="post" action="/add">
-    <input type="submit" value="Thêm sản phẩm" class="btn btn-primary">
+  <form method="get" action="/add">
+    <button type="submit">thêm sản phẩm</button>
   </form> 
   <hr>
   <h2>Danh sách sản phẩm</h2> <br>
@@ -27,15 +27,23 @@
     </thead>
 
     <tbody>
+       {{#each data}}
       <tr>
-        <td>Mã</td>
-        <td>Tên</td>
-        <td>Giá</td>
-        <td>Hình ảnh</td>
-        <td>Màu</td>
-        <td>Sửa/xóa</td>
+        <td>{{this.idSP}}</td>
+        <td>{{this.nameSP}}</td>
+        <td>{{this.priceSP}}</td>
+        {{!-- <td>Hình ảnh</td> --}}
+        <td>{{this.colorSP}}</td>
+        <td>
+              <form action="/edit/{{idSP}}" method="get">
+        <button type="submit">Edit</button>
+      </form>
+      <form action="/delete/{{idSP}}" method="post">
+        <button type="submit">Delete</button>
+      </form>
+             </td>
       </tr>
-      
+      {{/each}}
     </tbody>
 
   </table>

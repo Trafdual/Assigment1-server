@@ -24,7 +24,13 @@ app.engine(
 
 app.use(express.static('manager.js'))
 
-
+let myData = [ { idSP: 1, nameSP: 'John', priceSP: 25, colorSP: 'red' },
+{ idSP: 2, nameSP: 'Jane', priceSP: 30,colorSP: 'red' },
+{ idSP: 3, nameSP: 'Jane', priceSP: 30,colorSP: 'red' }
+];
+app.get("/products", function(req, res) {
+  res.render("products", { data: myData });
+});
 app.set('view engine', '.hbs');
 
 //Signup
@@ -83,14 +89,7 @@ app.post('/manager', function(req,res){
     res.redirect('/products')
 })
 
-//product
-app.get('/products', function(req, res){
-    res.render('products')
-})
 
-app.post('/products', function(req, res){
-    res.redirect('products')
-})
 
 //user
 app.get('/users', function(req, res){
@@ -100,12 +99,28 @@ app.get('/users', function(req, res){
 app.post('/users', function(req, res){
     res.redirect('users')
 })
+
+app.post('/products', function(req, res){
+    res.redirect('products')
+})
+
 //add
 app.get('/add', function(req, res){
     res.render('add')
 })
 
-app.post('/add', function(req, res){
-    res.redirect('add')
-})
+app.post("/add", function(req, res) {
 
+    let newData = {
+        idSP: myData.length + 1,
+        nameSP: req.body.nameSP,
+        priceSP: parseInt(req.body.priceSP),
+        colorSP:req.body.colorSP
+      };
+      myData.push(newData);
+      res.redirect('/products');
+});
+app.post('/delete/:idSP', (req, res) => {
+    myData = myData.filter(data => data.idSP !== parseInt(req.params.idSP));
+    res.redirect('/products');
+  });

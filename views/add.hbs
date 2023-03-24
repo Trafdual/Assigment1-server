@@ -10,14 +10,7 @@
   <div class="jumbotron text-center">
     <h1 class="text-center">Thêm mới</h1>
     <hr><br>
-    <form method="post" action="/products">
-      <div class="row">
-        <span class="col-lg-2"></span>
-        <label class="col-lg-2">Mã sản phẩm: </label>
-        <input class="col-lg-4" required type="text" id="idSP" name="idSP" placeholder="Nhập Mã sản phẩm">
-        
-      </div><br>
-
+    <form method="post" action="/add">
       <div class="row">
         <span class="col-lg-2"></span>
         <label class="col-lg-2">Tên sản phẩm: </label>
@@ -36,11 +29,11 @@
         <input class="col-lg-4" required type="text" id="colorSP" name="colorSP" placeholder="Nhập Màu sắc">
       </div><br>
 
-      <div class="row">
+      {{!-- <div class="row">
         <span class="col-lg-2"></span>
         <label class="col-lg-2">Hình ảnh: </label>
         <input class="col-lg-4" required type="file" id="ImgSP" name="ImgSP" accept="image/*" />
-      </div>
+      </div> --}}
     <br>
 
       <div class="text-center">
