@@ -28,9 +28,15 @@ let myData = [ { idSP: 1, nameSP: 'John', priceSP: 25, colorSP: 'red' },
 { idSP: 2, nameSP: 'Jane', priceSP: 30,colorSP: 'red' },
 { idSP: 3, nameSP: 'Jane', priceSP: 30,colorSP: 'red' }
 ];
+let users=[{idusers:1,
+nameUsers:'tra',mailusers:'t@gmail.com',pass:'123456'
+}];
 app.get("/products", function(req, res) {
   res.render("products", { data: myData });
 });
+app.get("/users", function(req, res) {
+    res.render("users", { data1: users });
+  });
 app.set('view engine', '.hbs');
 
 //Signup
@@ -92,9 +98,6 @@ app.post('/manager', function(req,res){
 
 
 //user
-app.get('/users', function(req, res){
-    res.render('users')
-})
 
 app.post('/users', function(req, res){
     res.redirect('users')
@@ -120,7 +123,34 @@ app.post("/add", function(req, res) {
       myData.push(newData);
       res.redirect('/products');
 });
+
 app.post('/delete/:idSP', (req, res) => {
     myData = myData.filter(data => data.idSP !== parseInt(req.params.idSP));
     res.redirect('/products');
+  });
+
+
+  app.get('/addUsers', function(req, res){
+    res.render('addUsers')
+})
+
+app.post("/addUsers", function(req, res) {
+    var emailusers=req.body.mailusers;
+    if(!/\S+@\S+\.\S+/.test(emailusers)){
+        res.render('addUsers', {
+        emailError: 'Nhập sai định dạng Email'});
+    }else{
+        let newData = {
+            idusers:users.length+1,
+            nameUsers: req.body.nameUsers,
+            mailusers: req.body.mailusers,
+            pass: req.body.pass
+          };
+          users.push(newData);
+          res.redirect('/users');
+    }
+});
+app.post('/deleteUsers/:idusers', (req, res) => {
+    users = users.filter(data => data.idusers !== parseInt(req.params.idusers));
+    res.redirect('/users');
   });

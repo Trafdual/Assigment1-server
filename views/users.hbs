@@ -9,6 +9,9 @@
 <body>
   <div class="jumbotron text-center">
   <h1>Users</h1>
+    <form method="get" action="/addUsers">
+    <button type="submit">thêm người dùng</button>
+  </form> 
   <hr>
   <h2>Danh sách user</h2> <br>
   <table class="table table-bordered">
@@ -23,12 +26,21 @@
     </thead>
 
     <tbody>
+      {{#each data1}}
       <tr>
-        <td>Tên: {{name}}</td>
-        <td>Email: {{email}}</td>
-        <td>MK</td>
+        <td>{{nameUsers}}</td>
+        <td> {{mailusers}}</td>
+        <td>{{pass}}</td>
         <td>Avt</td>
-        <td>Sửa/xóa</td>
+        <td>
+              <form action="/editusers/{{idusers}}" method="get">
+        <button type="submit">Edit</button>
+      </form>
+      <form action="/deleteUsers/{{idusers}}" method="post">
+        <button type="submit">Delete</button>
+      </form>
+             </td>
+         {{/each}}
       </tr>
       
     </tbody>
