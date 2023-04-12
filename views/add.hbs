@@ -10,25 +10,36 @@
   <div class="jumbotron text-center">
     <h1 class="text-center">Thêm mới</h1>
     <hr><br>
-    <form method="post" action="/add">
+    <form method="post" action="/sanpham/add">
       <div class="row">
         <span class="col-lg-2"></span>
         <label class="col-lg-2">Tên sản phẩm: </label>
-        <input class="col-lg-4" required type="text" id="nameSP" name="nameSP" placeholder="Nhập Tên sản phẩm">
+        <input class="col-lg-4" required type="text" id="nameSP" name="tenSP" placeholder="Nhập Tên sản phẩm">
       </div><br>
 
       <div class="row">
         <span class="col-lg-2"></span>
         <label class="col-lg-2">Đơn giá: </label>
-        <input class="col-lg-4" required type="text" id="priceSP" name="priceSP" placeholder="Nhập Đơn giá">
+        <input class="col-lg-4" required type="number" id="priceSP" name="giaSP" placeholder="Nhập Đơn giá">
       </div><br>
 
       <div class="row">
         <span class="col-lg-2"></span>
         <label class="col-lg-2">Màu sắc: </label>
-        <input class="col-lg-4" required type="text" id="colorSP" name="colorSP" placeholder="Nhập Màu sắc">
+        <input class="col-lg-4" required type="text" id="colorSP" name="mausac" placeholder="Nhập Màu sắc">
       </div><br>
 
+      <div class="row">
+        <span class="col-lg-2"></span>
+        <label class="col-lg-2">Loại Sản Phẩm: </label>
+        <input class="col-lg-4" required type="text" id="loaiSP" name="loaiSP" placeholder="Nhập Màu sắc">
+      </div><br>
+
+      <div class="row">
+        <span class="col-lg-2"></span>
+        <label class="col-lg-2">Tên Khách Hàng: </label>
+        <input class="col-lg-4" required type="text" id="tenKH" name="tenKH" placeholder="Nhập Màu sắc">
+      </div><br>
       {{!-- <div class="row">
         <span class="col-lg-2"></span>
         <label class="col-lg-2">Hình ảnh: </label>

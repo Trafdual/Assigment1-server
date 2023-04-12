@@ -9,7 +9,7 @@
 <body>
   <div class="jumbotron text-center">
   <h1>Users</h1>
-    <form method="get" action="/addUsers">
+    <form method="get" action="/User/addUser">
     <button type="submit">thêm người dùng</button>
   </form> 
   <hr>
@@ -28,15 +28,15 @@
     <tbody>
       {{#each data1}}
       <tr>
-        <td>{{nameUsers}}</td>
-        <td> {{mailusers}}</td>
-        <td>{{pass}}</td>
-        <td>Avt</td>
+        <td>{{tenUser}}</td>
+        <td> {{email}}</td>
+        <td>{{password}}</td>
+        <td><img src="{{imageUrl}}" width="100"></td>
         <td>
-              <form action="/editusers/{{idusers}}" method="get">
+              <form action="/User/edituser/{{this._id}}" method="get">
         <button type="submit">Edit</button>
       </form>
-      <form action="/deleteUsers/{{idusers}}" method="post">
+      <form action="/User/deleteUser/{{this._id}}" method="post">
         <button type="submit">Delete</button>
       </form>
              </td>

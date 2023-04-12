@@ -23,19 +23,19 @@
 
       <div class="row">
         <span class="col-lg-2"></span>
-        <label class="col-lg-2">Họ tên: </label>
-        <input class="col-lg-4" required type="text" id="names" name="names" placeholder="Nhập họ tên">
+        <label class="col-lg-2">FullName: </label>
+        <input class="col-lg-4" required type="text" id="names" name="tenUser" placeholder="Nhập họ tên">
       </div><br>
 
       <div class="row">
         <span class="col-lg-2"></span>
-        <label class="col-lg-2">Mật khẩu: </label>
+        <label class="col-lg-2">Password: </label>
         <input class="col-lg-4" required type="password" id="password" name="password" placeholder="Nhập Mật khẩu">
       </div><br>
 
       <div class="row">
         <span class="col-lg-2"></span>
-        <label class="col-lg-2">Xác nhận mật khẩu: </label>
+        <label class="col-lg-2">ConfirmPassword: </label>
         <input class="col-lg-4" required type="password" id="confirmPassword" name="confirmPassword" placeholder="Xác nhận mật khẩu">
         {{#if passError}}
         <strong class="alert alert-danger">{{passError}}</strong>
@@ -45,7 +45,7 @@
       <div class="row">
         <span class="col-lg-2"></span>
         <label class="col-lg-2">Avatar: </label>
-        <input class="col-lg-4" required type="file" id="Avatar" name="Avatar" accept="image/*" />
+        <input class="col-lg-4" required type="file" id="image" name="image" />
       </div>
     <br>
 

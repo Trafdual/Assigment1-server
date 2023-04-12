@@ -1,156 +1,34 @@
-var express = require('express');
-var app = express();
-var hbs = require('express-handlebars');
-app.listen(8080);
-var bodyParser = require("body-parser");
-var session = require('express-session')
+const express=require('express');
+const hbs=require('express-handlebars');
+var app=express();
+const{allowInsecurePrototypeAccess}=require('@handlebars/allow-prototype-access');
+const Handelbars=require('handlebars');
+const sanphamRoutes=require('./routes/SanPhamRouters');
+const userRoutes=require('./routes/users');
+const signupRoutes=require('./routes/SignupSigninRoutes');
+const mongoose=require('mongoose');
 
-app.use(bodyParser.urlencoded({ extended: false }));
+const uri="mongodb+srv://traz08102003:vrRJOA6nqwODzFmz@cp17303.4gzmzyt.mongodb.net/Cp17303?retryWrites=true&w=majority";
+mongoose.connect(uri,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(console.log("kết nối thành công"));
 
-app.use(session({
-    secret: 'zuogbicdic',
-    resave: false,
-    saveUninitialized: true
+app.engine(".hbs",hbs.engine({
+    extname:"hbs",
+    defaultLayout:false,
+    layoutsDir:"views/layouts/",
+    handlebars:allowInsecurePrototypeAccess(Handelbars)
 }));
 
-app.engine(
-    '.hbs',
-    hbs.engine({
-      extname: ".hbs",
-      defaultLayout: false,
-      layoutsDir: "views/layouts/"
-    })
-  );
+app.set("view engine",".hbs");
+app.set("views","./views");
+app.use('/sanpham',sanphamRoutes);
+app.use('/User',userRoutes);
+app.use('/',signupRoutes);
 
-app.use(express.static('manager.js'))
-
-let myData = [ { idSP: 1, nameSP: 'John', priceSP: 25, colorSP: 'red' },
-{ idSP: 2, nameSP: 'Jane', priceSP: 30,colorSP: 'red' },
-{ idSP: 3, nameSP: 'Jane', priceSP: 30,colorSP: 'red' }
-];
-let users=[{idusers:1,
-nameUsers:'tra',mailusers:'t@gmail.com',pass:'123456'
-}];
-app.get("/products", function(req, res) {
-  res.render("products", { data: myData });
-});
-app.get("/users", function(req, res) {
-    res.render("users", { data1: users });
-  });
-app.set('view engine', '.hbs');
-
-//Signup
-app.get('/signup', function(req, res){
-    res.render('signup')
-})
-
-app.post('/signup', function(req, res){
-    var names = req.body.names;
-    var email = req.body.email;
-    var password = req.body.password;
-    var confirmPassword = req.body.confirmPassword;
-    var img = req.body.Avatar;
-
-    //middleware
-    req.session.user = {email, names, password, img};
-
-    if(password!=confirmPassword){
-    res.render('signup',{
-        passError: 'Nhập lại mật khẩu sai',
-    });
-    }else if(!/\S+@\S+\.\S+/.test(email)){
-        res.render('signup', {
-        emailError: 'Nhập sai định dạng Email'});
-    }
-    else{
-        res.redirect('/login');
-        //res.send(names+' '+email+' '+password);
-    }
-})
-//Login
-app.get('/login', function(req, res){
-    res.render('login')
-})
-app.post('/login', function(req,res){
-    var EmailLogin = req.body.EmailLogin;
-    var PassLogin = req.body.PassLogin;
-    const user = req.session.user;
-    if (!user || user.email !== EmailLogin || user.password !== PassLogin) {
-    // Incorrect username or password
-        return res.render('login',{
-            LoginError:'Sai tài khoản hoặc mật khẩu'
-        });
-    }else{
-        res.redirect('/manager')
-    }
-})
+app.listen(8080,()=>
+console.log("Server is running on port 8080...")
+);
 
 
-
-//manager
-app.get('/manager', function(req, res){
-    res.render('manager')
-})
-app.post('/manager', function(req,res){
-    res.redirect('/products')
-})
-
-
-
-//user
-
-app.post('/users', function(req, res){
-    res.redirect('users')
-})
-
-app.post('/products', function(req, res){
-    res.redirect('products')
-})
-
-//add
-app.get('/add', function(req, res){
-    res.render('add')
-})
-
-app.post("/add", function(req, res) {
-
-    let newData = {
-        idSP: myData.length + 1,
-        nameSP: req.body.nameSP,
-        priceSP: parseInt(req.body.priceSP),
-        colorSP:req.body.colorSP
-      };
-      myData.push(newData);
-      res.redirect('/products');
-});
-
-app.post('/delete/:idSP', (req, res) => {
-    myData = myData.filter(data => data.idSP !== parseInt(req.params.idSP));
-    res.redirect('/products');
-  });
-
-
-  app.get('/addUsers', function(req, res){
-    res.render('addUsers')
-})
-
-app.post("/addUsers", function(req, res) {
-    var emailusers=req.body.mailusers;
-    if(!/\S+@\S+\.\S+/.test(emailusers)){
-        res.render('addUsers', {
-        emailError: 'Nhập sai định dạng Email'});
-    }else{
-        let newData = {
-            idusers:users.length+1,
-            nameUsers: req.body.nameUsers,
-            mailusers: req.body.mailusers,
-            pass: req.body.pass
-          };
-          users.push(newData);
-          res.redirect('/users');
-    }
-});
-app.post('/deleteUsers/:idusers', (req, res) => {
-    users = users.filter(data => data.idusers !== parseInt(req.params.idusers));
-    res.redirect('/users');
-  });
